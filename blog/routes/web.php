@@ -17,3 +17,4 @@ Route::get('/dashboard', function () {
 })->middleware('auth');
 
 Route::get('/admin', [AdminController::class, 'showUsers']);
+Route::get('/admin/users/{email}', [AdminController::class, 'editUser']);

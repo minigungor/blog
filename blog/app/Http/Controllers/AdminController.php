@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\User;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
@@ -16,6 +15,13 @@ class AdminController extends Controller
     }
 
     public function editUser(Request $request)
+    {
+        return view('admin.useredit', [
+           'user' => User::where('email', $request->email)->first(),
+        ]);
+    }
+
+    public function saveUser(Request $request)
     {
 
     }
