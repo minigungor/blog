@@ -14,15 +14,23 @@ class AdminController extends Controller
         ]);
     }
 
-    public function editUser(Request $request)
+    public function editUser(User $user)
     {
         return view('admin.useredit', [
-           'user' => User::where('email', $request->email)->first(),
+            'user' => $user,
         ]);
     }
 
-    public function saveUser(Request $request)
+    public function saveUser(User $user)
     {
+    }
 
+    public function deleteUser(User $user)
+    {
+        $user->delete();
+
+        return redirect()->action(
+            [AdminController::class, 'showUsers']
+        );
     }
 }

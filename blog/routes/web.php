@@ -17,4 +17,6 @@ Route::get('/dashboard', function () {
 })->middleware('auth');
 
 Route::get('/admin', [AdminController::class, 'showUsers']);
-Route::get('/admin/users/{email}', [AdminController::class, 'editUser']);
+Route::get('/admin/users/{user}', [AdminController::class, 'editUser']);
+Route::post('/admin/users/{user}', [AdminController::class, 'editUser']);
+Route::delete('/admin/users/{user}', [AdminController::class, 'deleteUser']);

@@ -1,7 +1,12 @@
-<form action="/admin/{{$user->email}}" method="POST">
+<form action="/admin/users/{{$user->id}}" method="POST">
     @csrf
     <input type="text" name="name" value="{{$user->name}}">
     <input type="text" name="email" value="{{$user->email}}">
     <input type="submit" value="save">
-    <input type="button" value="delete">
+</form>
+
+<form action="/admin/users/{{$user->id}}" method="POST">
+    @csrf
+    @method('DELETE')
+    <input type="submit" value="delete">
 </form>
