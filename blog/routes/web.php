@@ -18,5 +18,5 @@ Route::get('/dashboard', function () {
 
 Route::get('/admin', [AdminController::class, 'showUsers']);
 Route::get('/admin/users/{user}', [AdminController::class, 'editUser']);
-Route::post('/admin/users/{user}', [AdminController::class, 'editUser']);
+Route::put('/admin/users/{user}', [AdminController::class, 'saveUser']);
 Route::delete('/admin/users/{user}', [AdminController::class, 'deleteUser']);
