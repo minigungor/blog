@@ -1,3 +1,5 @@
+@use App\Http\Controllers\PostController
+@end
 You welcome!
 <form method="POST" action="/logout">
     @csrf
@@ -6,3 +8,6 @@ You welcome!
         Logout
     </button>
 </form>
+<a href="{{redirect()->action([PostController::class, 'showPosts'])}}">Posts</a>
+<a href="{{redirect()->action([PostController::class, 'showForm'])}}">AddPosts</a>
+
