@@ -6,10 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class PostModel extends Model
 {
+    protected $table = 'posts';
+
     protected $fillable = [
         'title',
         'text',
-        'author',
+        'user_id',
     ];
 
     protected function casts(): array
@@ -17,5 +19,10 @@ class PostModel extends Model
         return [
             'posted_at' => 'datetime',
         ];
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

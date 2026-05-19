@@ -10,12 +10,16 @@ class PostController
 {
     public function showPosts()
     {
-        return view('posts.showPosts', PostModel::all());
+        return view('posts.showPosts', [
+            'posts' => PostModel::all(),
+        ]);
     }
 
-    public function showForm()
+    public function showForm(User $user)
     {
-        return view('posts.postForm');
+        return view('posts.postForm', [
+            'user' => $user,
+        ]);
     }
 
     public function addPost(Request $request, User $user)
@@ -25,10 +29,10 @@ class PostController
             'text' => 'required|string',
         ]);
 
-        $post = PostModel::create([
+        $post = new PostModel([
            'title' => $validate['title'],
            'text' => $validate['text'],
-            'user' => $user,
+            'user_id' => auth()->id(),
         ]);
 
         $post->save();

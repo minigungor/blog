@@ -24,5 +24,5 @@ Route::delete('/admin/users/{user}', [AdminController::class, 'deleteUser']);
 
 
 Route::get('/posts', [PostController::class, 'showPosts']);
-Route::get('/posts/{user}', [PostController::class, 'addPost']);
+Route::get('/posts/{user}', [PostController::class, 'showForm']);
 Route::post('/posts/{user}', [PostController::class, 'addPost']);
