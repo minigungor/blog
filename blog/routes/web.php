@@ -17,10 +17,7 @@ Route::get('/dashboard', function () {
     return view('auth.dashboard');
 })->middleware('auth');
 
-Route::get('/admin', [AdminController::class, 'showUsers']);
-Route::get('/admin/users/{user}', [AdminController::class, 'editUser']);
-Route::put('/admin/users/{user}', [AdminController::class, 'saveUser']);
-Route::delete('/admin/users/{user}', [AdminController::class, 'deleteUser']);
+Route::resource('admin/users', AdminController::class);
 
 
 Route::get('/posts', [PostController::class, 'showPosts']);

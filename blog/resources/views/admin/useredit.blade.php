@@ -1,13 +1,29 @@
-<form action="/admin/users/{{$user->id}}" method="POST">
+<form action="{{ route('users.update', $user) }}" method="POST">
     @csrf
     @method('PUT')
-    <input type="text" name="name" value="{{$user->name}}">
-    <input type="text" name="email" value="{{$user->email}}">
-    <input type="submit" value="save">
+
+    <input
+        type="text"
+        name="name"
+        value="{{ old('name', $user->name) }}"
+    >
+
+    <input
+        type="email"
+        name="email"
+        value="{{ old('email', $user->email) }}"
+    >
+
+    <button type="submit">
+        Save
+    </button>
 </form>
 
-<form action="/admin/users/{{$user->id}}" method="POST">
+<form action="{{ route('users.destroy', $user) }}" method="POST">
     @csrf
     @method('DELETE')
-    <input type="submit" value="delete">
+
+    <button type="submit">
+        Delete
+    </button>
 </form>

@@ -8,41 +8,72 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-    public function showUsers()
+
+    public function index()
     {
         return view('admin.userlist', [
             'users' => User::all(),
         ]);
     }
 
-    public function editUser(User $user)
+    public function create()
+    {
+        return redirect('/register');
+    }
+
+    public function store(Request $request)
+    {
+        $user = new User($this->validateUser($request));
+        $user->save();
+
+        return redirect()->action(
+            [AdminController::class, 'index']
+        );
+    }
+
+    public function show(User $user)
+    {
+        return view('admin.showuser', [
+            'user' => $user,
+        ]);
+    }
+
+    public function edit(User $user)
     {
         return view('admin.useredit', [
             'user' => $user,
         ]);
     }
 
-    public function saveUser(User $user, Request $request)
+    public function update(Request $request, User $user)
     {
-        $validate = $request->validate([
+        $validated = $request->validate([
             'name' => ['string', 'required'],
             'email' => ['email', 'required', Rule::unique('users')->ignore($user->id)],
         ]);
 
-        $user->update($validate);
+        $user->update($validated);
 
         return redirect()->action(
-            [AdminController::class, 'showUsers']
+            [AdminController::class, 'index']
         );
-
     }
 
-    public function deleteUser(User $user)
+    public function destroy(User $user)
     {
         $user->delete();
 
         return redirect()->action(
-            [AdminController::class, 'showUsers']
+            [AdminController::class, 'index']
         );
     }
+
+    public function validateUser(Request $request)
+    {
+        return $request->validate([
+            'name' => ['string', 'required'],
+            'email' => ['email', 'required', Rule::unique('users')],
+        ]);
+    }
+
 }
