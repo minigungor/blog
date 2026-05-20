@@ -2,18 +2,8 @@
     @csrf
     @method('PUT')
 
-    <input
-        type="text"
-        name="name"
-        value="{{ old('name', $user->name) }}"
-    >
-
-    <input
-        type="email"
-        name="email"
-        value="{{ old('email', $user->email) }}"
-    >
-
+    <input type="text" name="name" value="{{ old('name', $user->name) }}">
+    <input type="email" name="email" value="{{ old('email', $user->email) }}">
     <button type="submit">
         Save
     </button>

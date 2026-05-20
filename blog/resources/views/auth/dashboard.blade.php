@@ -7,5 +7,5 @@ You welcome!
     </button>
 </form>
 
-<a href="/posts">posts</a>
-<a href="/posts/{{auth()->user()->id}}">add posts</a>
+<a href="{{route('posts.index')}}">posts</a>
+<a href="{{route('posts.create')}}">add posts</a>

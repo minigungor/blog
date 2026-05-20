@@ -3,42 +3,74 @@
 namespace App\Http\Controllers;
 
 use App\Models\PostModel;
-use App\Models\User;
 use Illuminate\Http\Request;
 
 class PostController
 {
-    public function showPosts()
+
+    public function index()
     {
         return view('posts.showPosts', [
-            'posts' => PostModel::all(),
+            'posts' => PostModel::with('user')->get(),
         ]);
     }
 
-    public function showForm(User $user)
+    public function create()
     {
         return view('posts.postForm', [
-            'user' => $user,
+            'post' => null,
         ]);
     }
 
-    public function addPost(Request $request, User $user)
+    public function store(Request $request)
     {
-        $validate = $request->validate([
+        $validated = $this->validatePost($request);
+
+        $validated['user_id'] = auth()->id();
+
+        PostModel::create($validated);
+
+        return redirect()->route('posts.index');
+    }
+
+    public function show(PostModel $post)
+    {
+        return view('posts.showPost', [
+            'post' => $post,
+        ]);
+    }
+
+    public function edit(PostModel $post)
+    {
+        return view('posts.postForm', [
+            'post' => $post,
+        ]);
+    }
+
+    public function update(PostModel $post, Request $request)
+    {
+        $validate = $this->validatePost($request);
+        $post->update($validate);
+
+        return redirect()->action(
+            [PostController::class, 'index']
+        );
+    }
+
+    public function destroy(PostModel $post)
+    {
+        $post->delete();
+
+        return redirect()->action(
+            [PostController::class, 'index']
+        );
+    }
+
+    public function validatePost(Request $request)
+    {
+        return $request->validate([
             'title' => 'required|string',
             'text' => 'required|string',
         ]);
-
-        $post = new PostModel([
-           'title' => $validate['title'],
-           'text' => $validate['text'],
-            'user_id' => auth()->id(),
-        ]);
-
-        $post->save();
-
-        return redirect()->action(
-            [PostController::class, 'showPosts']
-        );
     }
 }

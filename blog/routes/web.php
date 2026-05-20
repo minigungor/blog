@@ -19,7 +19,4 @@ Route::get('/dashboard', function () {
 
 Route::resource('admin/users', AdminController::class);
 
-
-Route::get('/posts', [PostController::class, 'showPosts']);
-Route::get('/posts/{user}', [PostController::class, 'showForm']);
-Route::post('/posts/{user}', [PostController::class, 'addPost']);
+Route::resource('posts', PostController::class);

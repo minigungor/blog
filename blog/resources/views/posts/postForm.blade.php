@@ -1,8 +1,30 @@
-<form action="/posts/{{$user->id}}" method="POST">
+<form action="{{ $post ? route('posts.update', $post) : route('posts.store')}}" method="POST" >
     @csrf
 
-    <input type="text" name="title" >
-    <textarea name="text" cols="30" rows="10"></textarea>
-    <input type="submit">
+    @if($post)
+        @method('PUT')
+    @endif
 
+    <input
+        type="text"
+        name="title"
+        value="{{ old('title', $post?->title) }}"
+    >
+
+    <textarea name="text" cols="30" rows="10">{{ old('text', $post?->text) }}</textarea>
+
+    <button type="submit">
+        {{ $post ? 'Update' : 'Create' }}
+    </button>
 </form>
+
+@isset($post)
+    <form action="{{ route('posts.destroy', $post) }}" method="POST">
+        @csrf
+        @method('DELETE')
+
+        <button type="submit">
+            Delete
+        </button>
+    </form>
+@endisset
