@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\CategoryController;
 
 Route::get('/register', [AuthController::class, 'showRegister']);
 Route::post('/register', [AuthController::class, 'register']);
@@ -20,3 +21,5 @@ Route::get('/dashboard', function () {
 Route::resource('admin/users', AdminController::class);
 
 Route::resource('posts', PostController::class);
+
+Route::resource('category', CategoryController::class);

@@ -11,6 +11,15 @@
         value="{{ old('title', $post?->title) }}"
     >
 
+    <select name="category_id">
+        @foreach($categories as $category)
+            <option value="{{ $category->id }}"
+                {{ old('category_id', $post?->category_id) == $category->id ? 'selected' : '' }}>
+                {{ $category->category }}
+            </option>
+        @endforeach
+    </select>
+
     <textarea name="text" cols="30" rows="10">{{ old('text', $post?->text) }}</textarea>
 
     <button type="submit">

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\PostModel;
 use Illuminate\Http\Request;
+use App\Models\Category;
 
 class PostController
 {
@@ -19,6 +20,7 @@ class PostController
     {
         return view('posts.postForm', [
             'post' => null,
+            'categories' => Category::all(),
         ]);
     }
 
@@ -44,6 +46,7 @@ class PostController
     {
         return view('posts.postForm', [
             'post' => $post,
+            'categories' => Category::all(),
         ]);
     }
 
@@ -71,6 +74,7 @@ class PostController
         return $request->validate([
             'title' => 'required|string',
             'text' => 'required|string',
+            'category_id' => 'required|exists:category,id',
         ]);
     }
 }
