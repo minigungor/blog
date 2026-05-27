@@ -1,3 +1,10 @@
+@extends('layout')
+
+@section('title', $post ? $post->text : 'Создать пост')
+
+
+@section('content')
+
 <form action="{{ $post ? route('posts.update', $post) : route('posts.store')}}" method="POST" >
     @csrf
 
@@ -37,3 +44,5 @@
         </button>
     </form>
 @endisset
+
+@endsection

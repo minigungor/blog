@@ -31,4 +31,11 @@ class PostModel extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    public function scopeVisible($query)
+    {
+        return $query->whereHas('user', function ($query) {
+            $query->where('is_blocked', false);
+        });
+    }
 }

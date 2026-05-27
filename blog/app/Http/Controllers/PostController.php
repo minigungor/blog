@@ -12,7 +12,9 @@ class PostController
     public function index()
     {
         return view('posts.showPosts', [
-            'posts' => PostModel::with('user')->get(),
+            'posts' => PostModel::visible()
+                ->with('user')
+                ->get(),
         ]);
     }
 
