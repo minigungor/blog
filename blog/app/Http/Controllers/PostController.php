@@ -13,7 +13,7 @@ class PostController
     {
         return view('posts.showPosts', [
             'posts' => PostModel::visible()
-                ->with('user')
+                ->with(['user', 'category'])
                 ->get(),
         ]);
     }
@@ -79,4 +79,5 @@ class PostController
             'category_id' => 'required|exists:category,id',
         ]);
     }
+
 }

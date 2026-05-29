@@ -46,7 +46,18 @@ class AuthController extends Controller
         ]);
 
         if (Auth::attempt($attempt)) {
+
+            if (auth()->user()->is_blocked) {
+
+                Auth::logout();
+
+                return back()->withErrors([
+                    'email' => 'User is blocked',
+                ]);
+            }
+
             $request->session()->regenerate();
+
             return redirect(route('home'));
         }
 

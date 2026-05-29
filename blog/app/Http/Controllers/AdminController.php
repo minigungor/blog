@@ -76,4 +76,13 @@ class AdminController extends Controller
         ]);
     }
 
+    public function toggleBlock(User $user)
+    {
+        $user->update([
+            'is_blocked' => !$user->is_blocked,
+        ]);
+
+        return redirect()->back();
+    }
+
 }

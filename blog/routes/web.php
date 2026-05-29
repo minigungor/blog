@@ -20,6 +20,12 @@ Route::get('/dashboard', function () {
     return view('auth.dashboard');
 })->middleware('auth');
 
+
+Route::patch(
+    '/admin/users/{user}/toggle-block',
+    [AdminController::class, 'toggleBlock']
+)->name('users.toggle-block');
+
 Route::resource('admin/users', AdminController::class);
 
 Route::resource('posts', PostController::class);
