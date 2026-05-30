@@ -1,19 +1,27 @@
-<form action="{{ route('users.update', $user) }}" method="POST">
-    @csrf
-    @method('PUT')
+@extends('layout')
 
-    <input type="text" name="name" value="{{ old('name', $user->name) }}">
-    <input type="email" name="email" value="{{ old('email', $user->email) }}">
-    <button type="submit">
-        Save
-    </button>
-</form>
+@section('title', 'EditUser')
 
-<form action="{{ route('users.destroy', $user) }}" method="POST">
-    @csrf
-    @method('DELETE')
+@section('content')
 
-    <button type="submit">
-        Delete
-    </button>
-</form>
+    <form action="{{ route('users.update', $user) }}" method="POST">
+        @csrf
+        @method('PUT')
+
+        <input type="text" name="name" value="{{ old('name', $user->name) }}">
+        <input type="email" name="email" value="{{ old('email', $user->email) }}">
+        <button type="submit">
+            Save
+        </button>
+    </form>
+
+    <form action="{{ route('users.destroy', $user) }}" method="POST">
+        @csrf
+        @method('DELETE')
+
+        <button type="submit">
+            Delete
+        </button>
+    </form>
+
+@endsection

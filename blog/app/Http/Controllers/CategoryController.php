@@ -44,8 +44,17 @@ class CategoryController
 
     public function update(Category $category, Request $request)
     {
-        $category->update($this->validateCategory($request));
-        return redirect()->action([CategoryController::class, 'index']);
+        $validated = $request->validate([
+            'category' => [
+                'required',
+                'string',
+                Rule::unique('category')->ignore($category->id),
+            ],
+        ]);
+
+        $category->update($validated);
+
+        return redirect()->route('category.index');
     }
 
     public function destroy(Category $category)

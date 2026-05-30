@@ -10,11 +10,16 @@
     <body>
         <header>
             <a href="{{ route('home') }}">логотип</a>
-        </header>
-        <nav>
+            <nav>
             <a href="{{ route('posts.index') }}">Посты</a>
             @auth
                 <a href="{{ route('posts.create') }}">Создать пост</a>
+                
+                <a href="{{ route('users.index') }}">AdminUsers</a>
+                <a href="{{ route('category.index') }}">AdminCategories</a>
+
+                <a href="{{ route('users.show', auth()->user()) }}">{{auth()->user()->name}}</a>
+
                 <form method="POST" action="{{route('logout')}}">
                     @csrf
 
@@ -24,9 +29,10 @@
             @if(!auth()->check())
                 <a href="{{ route('register') }}">Зарегистрироваться</a>
                 <a href="{{ route('login') }}"> Войти</a>
-            @endif
+            @endif 
 
         </nav>
+        </header>
 
         <main>
             @yield('content')
