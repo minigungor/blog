@@ -13,7 +13,25 @@
                 <h5>{{ $post->category->category }}</h5>
                 <p>{{ $post->text }}</p>
                 <a href="{{ route('posts.show', $post) }}">view post</a>
-                <a href="{{ route('posts.edit', $post) }}">edit post</a>
+                <a href="{{ route('posts.edit', $post) }}">edit post</a>     
+                <p>{{ $post->likes->count() }} likes</p>
+
+                <form action="{{ route('likes.store', $post) }}" method="POST">
+                    @csrf
+                    <button type="submit">
+                        Like
+                    </button>
+                </form>
+
+                <form action="{{ route('likes.destroy', $post) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+
+                    <button type="submit">
+                        Dislike
+                    </button>
+                </form>
+
             </div>
         @endforeach
     </div>

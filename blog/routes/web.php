@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\LikeController;
 
 Route::get('/', [PostController::class, 'index'])->name('home');
 
@@ -31,3 +32,9 @@ Route::resource('admin/users', AdminController::class);
 Route::resource('posts', PostController::class);
 
 Route::resource('category', CategoryController::class);
+
+Route::post('/posts/{post}/like', [LikeController::class, 'store'])
+    ->name('likes.store');
+
+Route::delete('/posts/{post}/like', [LikeController::class, 'destroy'])
+    ->name('likes.destroy');

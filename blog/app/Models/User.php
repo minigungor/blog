@@ -46,4 +46,14 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function likedPosts()
+    {
+        return $this->belongsToMany(
+            PostModel::class,
+            'likes',
+            'user_id',
+            'post_id'
+        );
+    }
 }
