@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class PostModel extends Model
 {
+    use SoftDeletes;
     protected $table = 'posts';
 
     protected $fillable = [
