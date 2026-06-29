@@ -3,10 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class PostModel extends Model
 {
     use SoftDeletes;
+
     protected $table = 'posts';
 
     protected $fillable = [
@@ -46,7 +48,17 @@ class PostModel extends Model
             User::class,
             'likes',
             'post_id',
-            'user_id'
+            'user_id',
+        );
+    }
+
+    public function tags()
+    {
+        return $this->belongsToMany(
+            Tag::class,
+            'post_tag',
+            'post_id',
+            'tag_id'
         );
     }
 }

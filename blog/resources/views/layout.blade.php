@@ -20,6 +20,8 @@
 
                 <a href="{{ route('users.show', auth()->user()) }}">{{auth()->user()->name}}</a>
 
+                <a href="{{ route('tags.index') }}">Теги</a>
+
                 <form method="POST" action="{{route('logout')}}">
                     @csrf
 

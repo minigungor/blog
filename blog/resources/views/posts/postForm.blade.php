@@ -27,6 +27,17 @@
         @endforeach
     </select>
 
+    <select name="tags[]" multiple>
+        @foreach($tags as $tag)
+            <option
+                value="{{ $tag->id }}"
+                {{ $post && $post->tags->contains($tag->id) ? 'selected' : '' }}
+            >
+                {{ $tag->name }}
+            </option>
+        @endforeach
+    </select>
+
     <textarea name="text" cols="30" rows="10">{{ old('text', $post?->text) }}</textarea>
 
     <button type="submit">

@@ -12,6 +12,9 @@
                 <h3>{{ $post->title }}</h3>
                 <h5>{{ $post->category->category }}</h5>
                 <p>{{ $post->text }}</p>
+                @foreach($post->tags as $tag)
+                    <span>{{ $tag->name }}</span>
+                @endforeach
                 <a href="{{ route('posts.show', $post) }}">view post</a>
                 <a href="{{ route('posts.edit', $post) }}">edit post</a>     
                 <p>{{ $post->likes->count() }} likes</p>

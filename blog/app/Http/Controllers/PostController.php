@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\PostModel;
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\Tag;
+
 
 class PostController
 {
@@ -13,9 +15,10 @@ class PostController
     {
         return view('posts.showPosts', [
             'posts' => PostModel::visible()
-                ->with(['user', 'category'])
-                ->get(),
+                ->with(['user', 'category', 'tags'])
+                ->get()
         ]);
+
     }
 
     public function create()
@@ -23,6 +26,7 @@ class PostController
         return view('posts.postForm', [
             'post' => null,
             'categories' => Category::all(),
+            'tags' => Tag::all(),
         ]);
     }
 
@@ -32,13 +36,22 @@ class PostController
 
         $validated['user_id'] = auth()->id();
 
-        PostModel::create($validated);
+        $post = PostModel::create($validated);
+
+
+        $post->tags()->sync($request->tags ?? []);
 
         return redirect()->route('posts.index');
     }
 
     public function show(PostModel $post)
     {
+        $post->load([
+            'user',
+            'category',
+            'tags',
+        ]);
+
         return view('posts.showPost', [
             'post' => $post,
         ]);
@@ -49,17 +62,19 @@ class PostController
         return view('posts.postForm', [
             'post' => $post,
             'categories' => Category::all(),
+            'tags' => Tag::all(),
         ]);
     }
 
-    public function update(PostModel $post, Request $request)
+    public function update(Request $request, PostModel $post)
     {
-        $validate = $this->validatePost($request);
-        $post->update($validate);
+        $validated = $this->validatePost($request);
 
-        return redirect()->action(
-            [PostController::class, 'index']
-        );
+        $post->update($validated);
+
+        $post->tags()->sync($request->tags ?? []);
+
+        return redirect()->route('posts.index');
     }
 
     public function destroy(PostModel $post)
@@ -74,9 +89,11 @@ class PostController
     public function validatePost(Request $request)
     {
         return $request->validate([
-            'title' => 'required|string',
-            'text' => 'required|string',
-            'category_id' => 'required|exists:category,id',
+            'title' => ['required', 'string'],
+            'text' => ['required', 'string'],
+            'category_id' => ['required','exists:category,id',],
+            'tags' => ['nullable', 'array'],
+            'tags.*' => ['exists:tags,id'],
         ]);
     }
 

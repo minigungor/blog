@@ -9,6 +9,9 @@
 	<h5>{{ $post->category->category }}</h5>
 	<p>{{ $post->text }}</p>
 	<p>{{ $post->likes()->count() }} likes</p>
+    @foreach($post->tags as $tag)
+        <span>{{ $tag->name }}</span>
+    @endforeach
 	<form action="{{ route('likes.store', $post) }}" method="POST">
         @csrf
         <button type="submit">

@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\LikeController;
+use App\Http\Controllers\TagController;
 
 Route::get('/', [PostController::class, 'index'])->name('home');
 
@@ -38,3 +39,5 @@ Route::post('/posts/{post}/like', [LikeController::class, 'store'])
 
 Route::delete('/posts/{post}/like', [LikeController::class, 'destroy'])
     ->name('likes.destroy');
+
+Route::resource('tags', TagController::class);
